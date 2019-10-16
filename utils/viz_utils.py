@@ -139,7 +139,7 @@ def get_bbox_button(row,scale_factor):
                   'method': 'relayout'}]
     return button_list
 
-def bbox_plot(df,image_path,scale_factor=1):
+def bbox_plot(df,image_path,scale_factor=1, save = False,display = True):
     """
     Takes in df constructed from output_dict, path to image and scaling factor for image.
     Outputs plotly plot of boundry boxes overlaying the input image
@@ -171,6 +171,12 @@ def bbox_plot(df,image_path,scale_factor=1):
                'plot_bgcolor':'rgba(0,0,0,0)'
               }
           })
+    if save == True:
+        img_name = image_path.split('\\')[1].split('.')[0]
+        plot.write_image(f"results/{img_name}_bbox.jpg")
+        if display == False:
+            return
+        
     config = {'displaylogo': False,'displayModeBar': True, 'modeBarButtonsToRemove':['zoomIn2d','zoomOut2d','pan2d','autoScale2d']} 
 
     return iplot(plot,config = config)
