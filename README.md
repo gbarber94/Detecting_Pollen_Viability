@@ -9,4 +9,4 @@ https://nbviewer.jupyter.org/github/gregorybarber94/Detecting_Pollen_Viability/b
 
 An object detection model was trained utilizing the tensorflow object detection api: (https://github.com/tensorflow/models/tree/master/research/object_detection) with Faster-RCNN to detect and classify 
 germinated and ungerimated pollen grains. The model was trained on pollen grains imaged from various cycads 
-and manually labeled utilizing labelImg (https://github.com/tzutalin/labelImg)
+and manually labeled with labelImg (https://github.com/tzutalin/labelImg)
