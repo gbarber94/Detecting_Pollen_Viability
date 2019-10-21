@@ -4,8 +4,9 @@ import pandas as pd
 import itertools
 import plotly.graph_objects as go 
 from plotly.offline import iplot
-from PIL import Image
+from PIL import Image, ImageOps
 from collections import defaultdict
+
 
 
 def outputdict_to_df(output_dict,image_path,score_threshold,image_cords_flip = True):
@@ -240,3 +241,21 @@ def twoclass_bbox_plot(df,image_path,scale_factor=1):
 
     return iplot(plot,config = config)
 
+def join_image(img_name,image_path,border_size = 2, border_color = 'white',save = False):
+    """
+    Takes in list of split images and outputs joined imaged with added border
+    """
+    img_list = []
+    #add border to image tiles
+    for i in range(len(image_path)):
+        img_with_border = ImageOps.expand(Image.open(image_path[i]),border = border_size,fill = border_color)
+        img_list.append(img_with_border)
+    #join images
+    img_row_top    = np.concatenate((img_list[0], img_list[1]), axis=1) # join images horizontally
+    img_row_bottom = np.concatenate((img_list[2], img_list[3]), axis=1)
+    img_combined   = np.concatenate((img_row_top, img_row_bottom), axis=0) # join images vertically
+    img_out = Image.fromarray(img_combined)
+    if save == True:
+        img_out.save(f'{img_name}_combined.jpg')
+        return
+    return img_out
