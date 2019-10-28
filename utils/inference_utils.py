@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd 
 import os
 import tensorflow.compat.v1 as tf
 
@@ -8,7 +9,9 @@ def get_image_paths(directory):
     Takes in directory, returns list of image paths
     """
     image_names = os.listdir(directory)
-    image_paths = [os.path.join(directory, i) for i in image_names]
+    image_paths = [os.path.join(directory, i) for i in image_names if i.split('.')[1] in ['jpg','png']]
+    if len(image_paths) == 0:
+        return 'no jpg or png images found in specified directory'
     return image_paths
 
 def load_image_into_numpy_array(image):
@@ -68,3 +71,18 @@ def run_inference_for_single_image(image, graph):
         output_dict['detection_masks'] = output_dict['detection_masks'][0]
   return output_dict
 
+
+def compute_viability(df,image_path):
+    """
+    Computes percent viability for output df
+    """
+    class_counts = df['detection_classes'].value_counts()
+    total_count  = class_counts.sum()
+    viability = class_counts[1]/total_count*100
+    viability = {'germinated_count':class_counts[1],
+                 'ungerminated_count':class_counts[2],
+                 'total_count': total_count,
+                 'percent_viability': viability,
+                 'parent_image': image_path.split('\\')[1].split('_')[0],
+                 'image_path': image_path}
+    return viability

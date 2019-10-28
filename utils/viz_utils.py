@@ -259,3 +259,14 @@ def join_image(img_name,image_path,border_size = 2, border_color = 'white',save 
         img_out.save(f'{img_name}_combined.jpg')
         return
     return img_out
+
+def group_split_image_paths(image_paths):
+    """
+    Group paths to split images by parent image key
+    """
+    key = [i.split("\\")[1].split('_')[0] for i in image_paths]
+    grouped_images = defaultdict(list)
+    for i, j in zip(key, image_paths):
+        grouped_images[i].append(j)
+    grouped_images = dict(grouped_images)
+    return grouped_images
