@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd 
 import os
+from pathlib import Path
 import tensorflow.compat.v1 as tf
 
 
@@ -8,11 +9,18 @@ def get_image_paths(directory):
     """
     Takes in directory, returns list of image paths
     """
-    image_names = os.listdir(directory)
-    image_paths = [os.path.join(directory, i) for i in image_names if i.split('.')[1] in ['jpg','png']]
+    image_paths = list(Path(directory).glob("*.jpg")) + list(Path(directory).glob("*.png"))#os.listdir(directory)
+    #image_paths = [os.path.join(directory, i) for i in image_names if i.split('.')[1] in ['jpg','png']]
     if len(image_paths) == 0:
         return 'no jpg or png images found in specified directory'
     return image_paths
+
+def get_image_number(image_path):
+    """
+    Extracts img number from path 
+    """
+    image_num = image_path.name.split('.')[0]
+    return image_num
 
 def load_image_into_numpy_array(image):
     """
@@ -83,6 +91,6 @@ def compute_viability(df,image_path):
                  'ungerminated_count':class_counts[2],
                  'total_count': total_count,
                  'percent_viability': viability,
-                 'parent_image': image_path.split('\\')[1].split('_')[0],
+                 'parent_image': image_path.name.split('_')[0],
                  'image_path': image_path}
     return viability

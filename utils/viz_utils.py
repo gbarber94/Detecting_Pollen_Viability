@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 from plotly.offline import iplot
 from PIL import Image, ImageOps
 from collections import defaultdict
+from pathlib import Path
 
 
 
@@ -70,7 +71,7 @@ def outputdict_to_xml(output_dict,image_path):
     """
     
     df = outputdict_to_df(output_dict,image_path,score_threshold = 0.5,image_cords_flip = False) #LabelImg flip cordinates
-    file_name = image_path.split("\\")[1]
+    file_name = image_path.name
     xml = ['<annotation>','    <filename>{}</filename>'.format(file_name)]
     df.apply(lambda x : row_to_xml(xml,x), axis = 1)
     xml.append('</annotation>')
@@ -173,7 +174,7 @@ def bbox_plot(df,image_path,scale_factor=1, save = False,display = True):
               }
           })
     if save == True:
-        img_name = image_path.split('\\')[1].split('.')[0]
+        img_name = image_path.name.split('.')[0]
         plot.write_image(f"results/{img_name}_bbox.jpg")
         if display == False:
             return
@@ -264,7 +265,7 @@ def group_split_image_paths(image_paths):
     """
     Group paths to split images by parent image key
     """
-    key = [i.split("\\")[1].split('_')[0] for i in image_paths]
+    key = [i.name.split('_')[0] for i in image_paths]
     grouped_images = defaultdict(list)
     for i, j in zip(key, image_paths):
         grouped_images[i].append(j)
