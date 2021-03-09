@@ -2,7 +2,7 @@
 
 ![](results/195_01_01_bbox.jpg)
 
-Tool to compute Cycad pollen viability from microscope images of germinating pollen. 
+Tool for computing Cycad pollen viability from microscope images of germinating pollen. 
 
 https://nbviewer.jupyter.org/github/gbarber94/Detecting_Pollen_Viability/blob/master/Detecting_Pollen_Viability.ipynb
 
