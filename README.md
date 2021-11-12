@@ -2,7 +2,7 @@
 
 Tool for computing Cycad pollen viability from microscope images of germinating pollen. 
 
-<img src = "results/38_02_01_bbox.jpg"/> <img src = "results/195_01_01_bbox.jpg" />
+<img src = "results/38_02_01_bbox.jpg" width = 250/> <img src = "results/251_01_01_bbox.jpg" width = 250/>  <img src = "results/38_01_01_bbox.jpg" width = 250/> 
 
 ## Summary
 
